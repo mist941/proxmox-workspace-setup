@@ -15,6 +15,7 @@ class ProxmoxAPI:
         print(url)
         data = {"username": self.user, "password": self.password}
         resp = requests.post(url, data=data, verify=self.verify_ssl)
+
         if resp.status_code != 200:
             raise Exception(f"Auth failed: {resp.text}")
         res = resp.json()["data"]
