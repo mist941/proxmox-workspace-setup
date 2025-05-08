@@ -9,7 +9,7 @@ def main():
     choice = questionary.select(
         "Select the OS:",
         choices=[
-            "🍃 Mint Cinamon",
+            "🍃 Mint Cinnamon",
             "🍊 Ubuntu",
             "🥝 Debian",
         ],
