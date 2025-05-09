@@ -42,3 +42,20 @@ class Proxmox:
         except Exception as e:
             print(f"Error getting next VM ID: {e}")
             return 100
+
+    def create_vm(self, vmid: int, name: str, iso_src: str) -> None:
+        try:
+            self.__proxmox.nodes(self.__node).qemu.create(
+                vmid,
+                name,
+                cores=2,
+                memory=4096,
+                net0="virtio,bridge=vmbr0",
+                ide2=f"local:iso/{iso_src},media=cdrom",
+                sata0="local-lvm:35",
+                boot="order=ide2;net0",
+                bootdisk="sata0",
+                ostype="l26",
+            )
+        except Exception as e:
+            print(f"Error creating VM: {e}")

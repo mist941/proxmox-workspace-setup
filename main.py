@@ -2,11 +2,8 @@ from proxmoxer_facade import Proxmox
 import questionary
 
 
-def main():
-    proxmox = Proxmox()
-    vm_id = proxmox.get_next_vm_id()
-    print(vm_id)
-    choice = questionary.select(
+def select_os():
+    return questionary.select(
         "Select the OS:",
         choices=[
             "🍃 Mint Cinnamon",
@@ -14,7 +11,13 @@ def main():
             "🥝 Debian",
         ],
     ).ask()
-    print(choice)
+
+
+def main():
+    proxmox = Proxmox()
+    vm_id = proxmox.get_next_vm_id()
+    os = select_os()
+    print(os)
 
 
 if __name__ == "__main__":
