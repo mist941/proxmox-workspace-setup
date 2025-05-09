@@ -1,5 +1,4 @@
 os_iso_dict = {
-    "🍃 Mint Cinnamon": "mint-21.1-cinnamon-64bit.iso",
-    "🍊 Ubuntu": "ubuntu-22.04.iso",
-    "🥝 Debian": "debian-11.iso",
+    "Ubuntu Server": "ubuntu-22.04.iso",
+    "CentOS Stream": "centos-stream-8-x86_64-dvd1.iso",
 }

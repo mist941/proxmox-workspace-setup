@@ -6,8 +6,8 @@ def select_os():
     return questionary.select(
         "Select the OS:",
         choices=[
-            "🍊 Ubuntu Server",
-            "🥝 CentOS Stream",
+            "Ubuntu Server",
+            "CentOS Stream",
         ],
     ).ask()
 
