@@ -45,9 +45,9 @@ class Proxmox:
 
     def create_vm(self, vmid: int, name: str, iso_src: str) -> None:
         try:
-            self.__proxmox.nodes(self.__node).qemu.create(
-                vmid,
-                name,
+            self.__proxmox.nodes(self.__node).qemu.post(
+                vmid=vmid,
+                name=name,
                 cores=1,
                 memory=2048,
                 net0="virtio,bridge=vmbr0",
@@ -56,7 +56,12 @@ class Proxmox:
                 boot="order=ide2;net0",
                 bootdisk="sata0",
                 ostype="l26",
-                autostart=True,
             )
         except Exception as e:
             print(f"Error creating VM: {e}")
+
+    def start_vm(self, vmid: int) -> None:
+        try:
+            self.__proxmox.nodes(self.__node).qemu(vmid).start.post()
+        except Exception as e:
+            print(f"Error starting VM: {e}")

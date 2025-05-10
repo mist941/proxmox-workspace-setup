@@ -3,6 +3,13 @@ import questionary
 from config import os_iso_dict
 
 
+def select_type():
+    return questionary.select(
+        "Select the type:",
+        choices=["VM", "LXC"],
+    ).ask()
+
+
 def select_os():
     return questionary.select(
         "Select the OS:",
@@ -21,13 +28,26 @@ def get_os_iso(os):
     return os_iso_dict[os]
 
 
-def main():
-    proxmox = Proxmox()
+def create_vm(proxmox: Proxmox, vm_id: int, vm_name: str, iso_src: str):
     vm_id = proxmox.get_next_vm_id()
     os = select_os()
     vm_name = get_vm_name()
     iso_src = get_os_iso(os)
     proxmox.create_vm(vmid=vm_id, name=vm_name, iso_src=iso_src)
+    proxmox.start_vm(vmid=vm_id)
+
+
+def create_lxc(proxmox: Proxmox):
+    pass
+
+
+def main():
+    proxmox = Proxmox()
+    type = select_type()
+    if type == "VM":
+        create_vm(proxmox)
+    elif type == "LXC":
+        create_lxc(proxmox)
 
 
 if __name__ == "__main__":
