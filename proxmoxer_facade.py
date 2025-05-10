@@ -65,3 +65,24 @@ class Proxmox:
             self.__proxmox.nodes(self.__node).qemu(vmid).start.post()
         except Exception as e:
             print(f"Error starting VM: {e}")
+
+    def create_lxc(self, vmid: int, name: str, template: str) -> None:
+        try:
+            self.__proxmox.nodes(self.__node).lxc.post(
+                vmid=vmid,
+                hostname=name,
+                ostemplate=template,
+                storage="local-lvm",
+                memory=512,
+                cores=1,
+                net0="name=eth0,bridge=vmbr0,ip=dhcp",
+                rootfs="local-lvm:8",
+            )
+        except Exception as e:
+            print(f"Error creating LXC: {e}")
+
+    def start_lxc(self, vmid: int) -> None:
+        try:
+            self.__proxmox.nodes(self.__node).lxc(vmid).start.post()
+        except Exception as e:
+            print(f"Error starting LXC: {e}")
