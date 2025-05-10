@@ -49,7 +49,7 @@ class Proxmox:
                 vmid,
                 name,
                 cores=2,
-                memory=4096,
+                memory=2048,
                 net0="virtio,bridge=vmbr0",
                 ide2=f"local:iso/{iso_src},media=cdrom",
                 sata0="local-lvm:35",
