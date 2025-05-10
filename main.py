@@ -10,7 +10,14 @@ def select_os():
     ).ask()
 
 
-def select_os_iso(os):
+def get_vm_name():
+    return questionary.text(
+        "Enter the VM name:",
+        default="VM",
+    ).ask()
+
+
+def get_os_iso(os):
     return os_iso_dict[os]
 
 
@@ -18,8 +25,9 @@ def main():
     proxmox = Proxmox()
     vm_id = proxmox.get_next_vm_id()
     os = select_os()
-    iso_src = select_os_iso(os)
-    proxmox.create_vm(vmid=vm_id, name="VM", iso_src=iso_src)
+    vm_name = get_vm_name()
+    iso_src = get_os_iso(os)
+    proxmox.create_vm(vmid=vm_id, name=vm_name, iso_src=iso_src)
 
 
 if __name__ == "__main__":

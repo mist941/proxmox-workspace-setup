@@ -48,7 +48,7 @@ class Proxmox:
             self.__proxmox.nodes(self.__node).qemu.create(
                 vmid,
                 name,
-                cores=2,
+                cores=1,
                 memory=2048,
                 net0="virtio,bridge=vmbr0",
                 ide2=f"local:iso/{iso_src},media=cdrom",
@@ -56,6 +56,7 @@ class Proxmox:
                 boot="order=ide2;net0",
                 bootdisk="sata0",
                 ostype="l26",
+                autostart=True,
             )
         except Exception as e:
             print(f"Error creating VM: {e}")
