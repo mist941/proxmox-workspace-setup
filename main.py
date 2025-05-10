@@ -1,7 +1,7 @@
 from datetime import datetime
 from proxmoxer_facade import Proxmox
 import questionary
-from config import os_dict
+from config import os_dict, os_iso_dict, lxc_os_dict
 
 
 def select_type():
@@ -25,12 +25,12 @@ def get_vm_name(type: str):
     ).ask()
 
 
-def get_os_iso(os):
-    return os_dict["VM"][os]
+def get_os_iso(os: str):
+    return os_iso_dict[os]
 
 
 def get_lxc_template(os: str):
-    return os_dict["LXC"][os]
+    return lxc_os_dict[os]
 
 
 def create_vm(proxmox: Proxmox, vm_id: int, vm_name: str, iso_src: str):
@@ -39,16 +39,14 @@ def create_vm(proxmox: Proxmox, vm_id: int, vm_name: str, iso_src: str):
     vm_name = get_vm_name(type="VM")
     iso_src = get_os_iso(os)
     proxmox.create_vm(vmid=vm_id, name=vm_name, iso_src=iso_src)
-    proxmox.start_vm(vmid=vm_id)
 
 
 def create_lxc(proxmox: Proxmox):
-    vmid = proxmox.get_next_lxc_id()
+    vmid = proxmox.get_next_vm_id()
     lxc_name = get_vm_name(type="LXC")
     os = select_os(type="LXC")
     template = get_lxc_template(os)
     proxmox.create_lxc(vmid=vmid, name=lxc_name, template=template)
-    proxmox.start_lxc(vmid=vmid)
 
 
 def main():
