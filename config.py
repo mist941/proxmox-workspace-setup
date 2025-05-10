@@ -11,3 +11,8 @@ lxc_os_dict = {
     "Fedora": "fedora-42-default_20250428_amd64.tar.xz",
     "OpenSUSE": "opensuse-15.6-default_20240910_amd64.tar.xz",
 }
+
+os_dict = {
+    "VM": list(os_iso_dict.keys()),
+    "LXC": list(lxc_os_dict.keys()),
+}

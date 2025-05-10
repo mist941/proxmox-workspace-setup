@@ -1,7 +1,7 @@
 from datetime import datetime
 from proxmoxer_facade import Proxmox
 import questionary
-from config import os_iso_dict, lxc_os_dict
+from config import os_dict
 
 
 def select_type():
@@ -14,7 +14,7 @@ def select_type():
 def select_os(type: str):
     return questionary.select(
         f"Select the {type} OS:",
-        choices=["Ubuntu Server", "CentOS Stream", "Fedora Server", "Debian"],
+        choices=os_dict[type],
     ).ask()
 
 
@@ -26,11 +26,11 @@ def get_vm_name(type: str):
 
 
 def get_os_iso(os):
-    return os_iso_dict[os]
+    return os_dict["VM"][os]
 
 
 def get_lxc_template(os: str):
-    return lxc_os_dict[os]
+    return os_dict["LXC"][os]
 
 
 def create_vm(proxmox: Proxmox, vm_id: int, vm_name: str, iso_src: str):
